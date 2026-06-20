@@ -1,15 +1,29 @@
-# tmux-bluetooth-revamped
+<div align="center">
+
+<h1>tmux-bluetooth-revamped</h1>
+
+**Every connected Bluetooth device and its battery in your tmux status bar, without blocking the render.**
 
 [![Tests](https://github.com/gufranco/tmux-bluetooth-revamped/actions/workflows/tests.yml/badge.svg)](https://github.com/gufranco/tmux-bluetooth-revamped/actions/workflows/tests.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-The connected Bluetooth device and its battery in your tmux status bar, without
-ever blocking the status render.
+</div>
 
-The value is read from a tmux server user-option and returns instantly, while a
-detached worker queries Bluetooth in the background. No temp files are used.
+**2** placeholders · **2** platforms · **76** tests · **95%+** coverage
 
-Built from
-[tmux-plugin-template](https://github.com/gufranco/tmux-plugin-template).
+The value is read from a tmux server user-option and returns instantly, while a detached worker queries Bluetooth in the background. No temp files are used. Every connected device is listed, joined by a configurable separator.
+
+Built from [tmux-plugin-template](https://github.com/gufranco/tmux-plugin-template).
+
+<table>
+<tr>
+<td><b>Non-blocking</b><br>The status render reads a cached tmux user-option and returns instantly.</td>
+<td><b>No temp files</b><br>State lives in a tmux server user-option, never on disk.</td>
+</tr>
+<tr>
+<td><b>Every device</b><br>Lists all connected devices and their battery, joined by a configurable separator.</td>
+<td><b>Tested</b><br>76 tests with 95%+ coverage across both platforms.</td>
+</tr>
+</table>
 
 ## Placeholders
 
@@ -48,6 +62,14 @@ Press `prefix + I` to install.
 
 macOS needs no extra package. On Linux, install `upower`. When no device is
 connected the placeholders render empty. Every connected device is listed, joined by the configurable separator.
+
+## Development
+
+```sh
+make test
+make lint
+make coverage
+```
 
 ## License
 
