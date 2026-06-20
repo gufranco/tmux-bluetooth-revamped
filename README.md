@@ -1,5 +1,7 @@
 # tmux-bluetooth-revamped
 
+[![Tests](https://github.com/gufranco/tmux-bluetooth-revamped/actions/workflows/tests.yml/badge.svg)](https://github.com/gufranco/tmux-bluetooth-revamped/actions/workflows/tests.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 The connected Bluetooth device and its battery in your tmux status bar, without
 ever blocking the status render.
 
@@ -36,10 +38,15 @@ Press `prefix + I` to install.
 | `@bluetooth_revamped_icon` | `BT` | icon shown when a device is connected |
 | `@bluetooth_revamped_enable_logging` | `0` | set to `1` to log under `~/.tmux/bluetooth-revamped-logs` |
 
-## Platform support
+## Support by platform and architecture
 
-macOS uses `system_profiler SPBluetoothDataType`. Linux uses `upower`. When no
-device is connected the placeholders render empty.
+| Platform | Supported |
+|----------|-----------|
+| macOS (Intel and Apple Silicon) | yes, built-in `system_profiler` |
+| Linux (x86_64 and arm64) | yes, with `upower` installed |
+
+macOS needs no extra package. On Linux, install `upower`. When no device is
+connected the placeholders render empty.
 
 ## License
 
