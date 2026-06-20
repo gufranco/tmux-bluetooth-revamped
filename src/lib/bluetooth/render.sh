@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+#
+# render.sh: map the cached bluetooth value to text and an icon.
+
+[[ -n "${_BLUETOOTH_REVAMPED_RENDER_LOADED:-}" ]] && return 0
+_BLUETOOTH_REVAMPED_RENDER_LOADED=1
+
+_BT_RENDER_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=/dev/null
+source "${_BT_RENDER_DIR}/../tmux/tmux-ops.sh"
+
+bluetooth_render_device() {
+  [[ -z "${1}" ]] && { echo ""; return 0; }
+  local fmt
+  fmt=$(get_tmux_option "@bluetooth_revamped_format" "%s")
+  # shellcheck disable=SC2059
+  printf "${fmt}" "${1}"
+}
+
+bluetooth_render_icon() {
+  [[ -z "${1}" ]] && { echo ""; return 0; }
+  get_tmux_option "@bluetooth_revamped_icon" "BT"
+}
+
+export -f bluetooth_render_device
+export -f bluetooth_render_icon
