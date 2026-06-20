@@ -15,7 +15,7 @@ Built from
 
 | Placeholder | Output |
 |-------------|--------|
-| `#{bluetooth}` | connected device and battery, for example `AirPods Pro 85%` |
+| `#{bluetooth}` | connected devices and battery, joined, for example `AirPods 85%, Mouse 50%` |
 | `#{bluetooth_icon}` | an icon shown only when a device is connected |
 
 ## Install
@@ -35,6 +35,7 @@ Press `prefix + I` to install.
 |--------|---------|---------|
 | `@bluetooth_revamped_interval` | `30` | seconds a reading stays fresh |
 | `@bluetooth_revamped_format` | `%s` | format for the device string |
+| `@bluetooth_revamped_separator` | `, ` | separator between multiple devices |
 | `@bluetooth_revamped_icon` | `BT` | icon shown when a device is connected |
 | `@bluetooth_revamped_enable_logging` | `0` | set to `1` to log under `~/.tmux/bluetooth-revamped-logs` |
 
@@ -46,7 +47,7 @@ Press `prefix + I` to install.
 | Linux (x86_64 and arm64) | yes, with `upower` installed |
 
 macOS needs no extra package. On Linux, install `upower`. When no device is
-connected the placeholders render empty.
+connected the placeholders render empty. Every connected device is listed, joined by the configurable separator.
 
 ## License
 

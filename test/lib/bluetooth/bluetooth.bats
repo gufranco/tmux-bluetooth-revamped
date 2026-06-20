@@ -31,6 +31,20 @@ teardown() {
   [[ -z "$(bt_parse_linux "percentage: 50%")" ]]
 }
 
+@test "bluetooth.sh - bt_parse_macos enumerates every connected device" {
+  local txt=$'Bluetooth:\n    Connected:\n        AirPods Pro:\n            Battery Level: 85%\n        Magic Mouse:\n            Battery Level: 50%\n'
+  run bt_parse_macos "${txt}"
+  [[ "${lines[0]}" == "AirPods Pro 85%" ]]
+  [[ "${lines[1]}" == "Magic Mouse 50%" ]]
+}
+
+@test "bluetooth.sh - bt_parse_linux enumerates every device" {
+  local txt=$'model: WH-1000XM4\npercentage: 80%\nmodel: MX Master\npercentage: 40%\n'
+  run bt_parse_linux "${txt}"
+  [[ "${lines[0]}" == "WH-1000XM4 80%" ]]
+  [[ "${lines[1]}" == "MX Master 40%" ]]
+}
+
 @test "bluetooth.sh - read_bluetooth uses system_profiler on macOS" {
   _PLATFORM_OS_CACHE="Darwin"
   _read_bt_macos() { printf '%s' "${MACOS_BT}"; }

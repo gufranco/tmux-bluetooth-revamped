@@ -11,10 +11,17 @@ source "${_BT_RENDER_DIR}/../tmux/tmux-ops.sh"
 
 bluetooth_render_device() {
   [[ -z "${1}" ]] && { echo ""; return 0; }
+  local sep out="" line
+  sep=$(get_tmux_option "@bluetooth_revamped_separator" ", ")
+  while IFS= read -r line; do
+    [[ -z "${line}" ]] && continue
+    [[ -n "${out}" ]] && out="${out}${sep}"
+    out="${out}${line}"
+  done <<< "${1}"
   local fmt
   fmt=$(get_tmux_option "@bluetooth_revamped_format" "%s")
   # shellcheck disable=SC2059
-  printf "${fmt}" "${1}"
+  printf "${fmt}" "${out}"
 }
 
 bluetooth_render_icon() {

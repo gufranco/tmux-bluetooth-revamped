@@ -14,16 +14,16 @@ source "${_BT_LIB_DIR}/../utils/platform.sh"
 # shellcheck source=/dev/null
 source "${_BT_LIB_DIR}/../utils/has-command.sh"
 
-# bt_parse_macos TEXT -> "<name> <battery%>" for the first connected device.
+# bt_parse_macos TEXT -> "<name> <battery%>" per connected device, one per line.
 # The awk program is kept on a single line so coverage tools count it as one
 # executed statement rather than many uncovered lines.
 bt_parse_macos() {
-  printf '%s\n' "${1}" | awk '/Connected:/{c=1;next} c&&/^[[:space:]]+[A-Za-z0-9].*:[[:space:]]*$/{n=$0;sub(/:[[:space:]]*$/,"",n);gsub(/^[[:space:]]+/,"",n)} c&&/Battery Level:/{v=$0;sub(/.*Battery Level:[[:space:]]*/,"",v);print n" "v;exit}'
+  printf '%s\n' "${1}" | awk '/Connected:/{c=1;next} c&&/^[[:space:]]+[A-Za-z0-9].*:[[:space:]]*$/{n=$0;sub(/:[[:space:]]*$/,"",n);gsub(/^[[:space:]]+/,"",n)} c&&/Battery Level:/{v=$0;sub(/.*Battery Level:[[:space:]]*/,"",v);print n" "v}'
 }
 
-# bt_parse_linux TEXT -> "<model> <percentage>" for the first device with both.
+# bt_parse_linux TEXT -> "<model> <percentage>" per device, one per line.
 bt_parse_linux() {
-  printf '%s\n' "${1}" | awk '/model:/{m=$0;sub(/.*model:[[:space:]]*/,"",m)} /percentage:/{p=$0;sub(/.*percentage:[[:space:]]*/,"",p);if(m!=""){print m" "p;exit}}'
+  printf '%s\n' "${1}" | awk '/model:/{m=$0;sub(/.*model:[[:space:]]*/,"",m)} /percentage:/{p=$0;sub(/.*percentage:[[:space:]]*/,"",p);if(m!=""){print m" "p;m=""}}'
 }
 
 # Host-probe seams.

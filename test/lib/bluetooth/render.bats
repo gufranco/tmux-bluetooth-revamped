@@ -25,6 +25,17 @@ teardown() {
   [[ "$(bluetooth_render_device "AirPods 85%")" == "BT AirPods 85%" ]]
 }
 
+@test "render.sh - bluetooth_render_device joins multiple devices" {
+  local txt=$'AirPods 85%\nMagic Mouse 50%'
+  [[ "$(bluetooth_render_device "${txt}")" == "AirPods 85%, Magic Mouse 50%" ]]
+}
+
+@test "render.sh - bluetooth_render_device honors a custom separator" {
+  set_tmux_option "@bluetooth_revamped_separator" " | "
+  local txt=$'AirPods 85%\nMouse 50%'
+  [[ "$(bluetooth_render_device "${txt}")" == "AirPods 85% | Mouse 50%" ]]
+}
+
 @test "render.sh - bluetooth_render_icon is empty when nothing is connected" {
   [[ -z "$(bluetooth_render_icon "")" ]]
 }
