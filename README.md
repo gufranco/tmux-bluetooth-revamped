@@ -4,7 +4,7 @@
 
 **Every connected Bluetooth device and its battery in your tmux status bar, without blocking the render.**
 
-[![Tests](https://github.com/gufranco/tmux-bluetooth-revamped/actions/workflows/tests.yml/badge.svg)](https://github.com/gufranco/tmux-bluetooth-revamped/actions/workflows/tests.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) [![Version](https://img.shields.io/badge/version-1.1.1-blue.svg)](CHANGELOG.md)
+[![Tests](https://github.com/tmux-revamped/tmux-bluetooth-revamped/actions/workflows/tests.yml/badge.svg)](https://github.com/tmux-revamped/tmux-bluetooth-revamped/actions/workflows/tests.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) [![Version](https://img.shields.io/badge/version-1.1.1-blue.svg)](CHANGELOG.md)
 
 </div>
 
@@ -12,7 +12,7 @@
 
 The value is read from a tmux server user-option and returns instantly, while a detached worker queries Bluetooth in the background. No temp files are used. Every connected device is listed, joined by a configurable separator.
 
-Built from [tmux-plugin-template](https://github.com/gufranco/tmux-plugin-template).
+Built from [tmux-plugin-template](https://github.com/tmux-revamped/tmux-plugin-template).
 
 <table>
 <tr>
@@ -37,7 +37,7 @@ Built from [tmux-plugin-template](https://github.com/gufranco/tmux-plugin-templa
 With [TPM](https://github.com/tmux-plugins/tpm):
 
 ```tmux
-set -g @plugin 'gufranco/tmux-bluetooth-revamped'
+set -g @plugin 'tmux-revamped/tmux-bluetooth-revamped'
 set -g status-right '#{bluetooth_icon} #{bluetooth}'
 ```
 
