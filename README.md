@@ -4,11 +4,11 @@
 
 **Every connected Bluetooth device and its battery in your tmux status bar, without blocking the render.**
 
-[![Tests](https://github.com/tmux-revamped/tmux-bluetooth-revamped/actions/workflows/tests.yml/badge.svg)](https://github.com/tmux-revamped/tmux-bluetooth-revamped/actions/workflows/tests.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) [![Version](https://img.shields.io/badge/version-1.1.1-blue.svg)](CHANGELOG.md)
+[![Tests](https://github.com/tmux-revamped/tmux-bluetooth-revamped/actions/workflows/tests.yml/badge.svg)](https://github.com/tmux-revamped/tmux-bluetooth-revamped/actions/workflows/tests.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) [![Version](https://img.shields.io/badge/version-1.2.0-blue.svg)](CHANGELOG.md)
 
 </div>
 
-**2** placeholders · **2** platforms · **76** tests · **95%+** coverage
+**4** placeholders · **2** platforms · **86** tests · **95%+** coverage
 
 The value is read from a tmux server user-option and returns instantly, while a detached worker queries Bluetooth in the background. No temp files are used. Every connected device is listed, joined by a configurable separator.
 
@@ -21,7 +21,7 @@ Built from [tmux-plugin-template](https://github.com/tmux-revamped/tmux-plugin-t
 </tr>
 <tr>
 <td><b>Every device</b><br>Lists all connected devices and their battery, joined by a configurable separator.</td>
-<td><b>Tested</b><br>76 tests with 95%+ coverage across both platforms.</td>
+<td><b>Tested</b><br>86 tests with 95%+ coverage across both platforms.</td>
 </tr>
 </table>
 
@@ -31,6 +31,8 @@ Built from [tmux-plugin-template](https://github.com/tmux-revamped/tmux-plugin-t
 |-------------|--------|
 | `#{bluetooth}` | connected devices and battery, joined, for example `AirPods 85%, Mouse 50%` |
 | `#{bluetooth_icon}` | an icon shown only when a device is connected |
+| `#{bluetooth_count}` | number of connected devices, for example `2`, or `0` when none, for narrow bars |
+| `#{bluetooth_min}` | the lowest-battery device only, for example `Mouse 20%`, empty when none reports a battery |
 
 ## Install
 

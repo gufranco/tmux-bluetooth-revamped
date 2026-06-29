@@ -5,6 +5,21 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-06-29
+
+### Added
+
+- `#{bluetooth_count}` placeholder: the number of connected devices, for narrow
+  status bars.
+- `#{bluetooth_min}` placeholder: a single summary of the lowest-battery device,
+  for users who do not want the full list.
+
+### Fixed
+
+- Connected devices that report no battery level are now listed by name instead
+  of being dropped. The macOS parser also skips the "Not Connected" section so
+  disconnected devices never appear.
+
 ## [1.1.1] - 2026-06-23
 
 ### Changed

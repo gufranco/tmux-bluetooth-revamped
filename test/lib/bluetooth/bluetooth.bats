@@ -63,3 +63,34 @@ teardown() {
   has_command() { return 1; }
   [[ -z "$(read_bluetooth)" ]]
 }
+
+@test "bluetooth.sh - bt_parse_macos lists a connected device with no battery" {
+  local txt=$'Bluetooth:\n    Connected:\n        Magic Keyboard:\n            Address: 00-22\n'
+  [[ "$(bt_parse_macos "${txt}")" == "Magic Keyboard" ]]
+}
+
+@test "bluetooth.sh - bt_parse_macos mixes battery and no-battery devices" {
+  local txt=$'Bluetooth:\n    Connected:\n        AirPods Pro:\n            Battery Level: 85%\n        Magic Keyboard:\n            Address: 00-22\n'
+  run bt_parse_macos "${txt}"
+  [[ "${lines[0]}" == "AirPods Pro 85%" ]]
+  [[ "${lines[1]}" == "Magic Keyboard" ]]
+}
+
+@test "bluetooth.sh - bt_parse_macos skips the Not Connected section" {
+  local txt=$'Bluetooth:\n    Connected:\n        AirPods Pro:\n            Battery Level: 85%\n    Not Connected:\n        Old Mouse:\n            Address: 00-99\n'
+  run bt_parse_macos "${txt}"
+  [[ "${#lines[@]}" -eq 1 ]]
+  [[ "${lines[0]}" == "AirPods Pro 85%" ]]
+}
+
+@test "bluetooth.sh - bt_parse_linux lists a device with no percentage" {
+  local txt=$'Device: /org/freedesktop/UPower/devices/keyboard\n  model:               Keychron K2\n'
+  [[ "$(bt_parse_linux "${txt}")" == "Keychron K2" ]]
+}
+
+@test "bluetooth.sh - bt_parse_linux mixes battery and no-battery devices" {
+  local txt=$'model: WH-1000XM4\npercentage: 80%\nmodel: Keychron K2\n'
+  run bt_parse_linux "${txt}"
+  [[ "${lines[0]}" == "WH-1000XM4 80%" ]]
+  [[ "${lines[1]}" == "Keychron K2" ]]
+}

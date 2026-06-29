@@ -2,7 +2,7 @@
 #
 # bluetooth.sh: command dispatcher for tmux-bluetooth-revamped.
 #
-# Usage: bluetooth.sh device | icon | refresh
+# Usage: bluetooth.sh device | icon | count | min | refresh
 
 PLUGIN_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
@@ -47,6 +47,8 @@ main() {
   case "${cmd}" in
     device) bluetooth_render_device "$(cache_get device)" ;;
     icon)   bluetooth_render_icon "$(cache_get device)" ;;
+    count)  bluetooth_render_count "$(cache_get device)" ;;
+    min)    bluetooth_render_min "$(cache_get device)" ;;
     *)      return 0 ;;
   esac
 }

@@ -14,16 +14,20 @@ source "${_BT_LIB_DIR}/../utils/platform.sh"
 # shellcheck source=/dev/null
 source "${_BT_LIB_DIR}/../utils/has-command.sh"
 
-# bt_parse_macos TEXT -> "<name> <battery%>" per connected device, one per line.
+# bt_parse_macos TEXT -> "<name>[ <battery%>]" per connected device, one per
+# line. A connected device with no Battery Level line is still listed, name only.
+# The "Not Connected:" section is skipped so disconnected devices never appear.
 # The awk program is kept on a single line so coverage tools count it as one
 # executed statement rather than many uncovered lines.
 bt_parse_macos() {
-  printf '%s\n' "${1}" | awk '/Connected:/{c=1;next} c&&/^[[:space:]]+[A-Za-z0-9].*:[[:space:]]*$/{n=$0;sub(/:[[:space:]]*$/,"",n);gsub(/^[[:space:]]+/,"",n)} c&&/Battery Level:/{v=$0;sub(/.*Battery Level:[[:space:]]*/,"",v);print n" "v}'
+  printf '%s\n' "${1}" | awk '/Not Connected:/{c=0;next} /Connected:/{c=1;next} c&&/^[[:space:]]+[A-Za-z0-9].*:[[:space:]]*$/{if(n!="")print n;n=$0;sub(/:[[:space:]]*$/,"",n);gsub(/^[[:space:]]+/,"",n)} c&&/Battery Level:/{v=$0;sub(/.*Battery Level:[[:space:]]*/,"",v);print n" "v;n=""} END{if(n!="")print n}'
 }
 
-# bt_parse_linux TEXT -> "<model> <percentage>" per device, one per line.
+# bt_parse_linux TEXT -> "<model>[ <percentage>]" per device, one per line. A
+# device with a model but no percentage line is still listed, model only. Each
+# model line flushes the previous device, so model-only devices are not dropped.
 bt_parse_linux() {
-  printf '%s\n' "${1}" | awk '/model:/{m=$0;sub(/.*model:[[:space:]]*/,"",m)} /percentage:/{p=$0;sub(/.*percentage:[[:space:]]*/,"",p);if(m!=""){print m" "p;m=""}}'
+  printf '%s\n' "${1}" | awk '/model:/{if(m!="")print m (p==""?"":" "p);m=$0;sub(/.*model:[[:space:]]*/,"",m);p=""} /percentage:/{p=$0;sub(/.*percentage:[[:space:]]*/,"",p)} END{if(m!="")print m (p==""?"":" "p)}'
 }
 
 # Host-probe seams.

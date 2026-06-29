@@ -60,3 +60,27 @@ teardown() {
   run main bogus
   [[ -z "${output}" ]]
 }
+
+@test "bluetooth.sh dispatcher - count subcommand renders the device count" {
+  read_bluetooth() { echo "AirPods 85%"; echo "Magic Mouse 50%"; }
+  run main count
+  [[ "${output}" == "2" ]]
+}
+
+@test "bluetooth.sh dispatcher - count is 0 with nothing connected" {
+  read_bluetooth() { echo ""; }
+  run main count
+  [[ "${output}" == "0" ]]
+}
+
+@test "bluetooth.sh dispatcher - min subcommand renders the lowest battery device" {
+  read_bluetooth() { echo "AirPods 85%"; echo "Magic Mouse 50%"; }
+  run main min
+  [[ "${output}" == "Magic Mouse 50%" ]]
+}
+
+@test "bluetooth.sh dispatcher - min is empty with nothing connected" {
+  read_bluetooth() { echo ""; }
+  run main min
+  [[ -z "${output}" ]]
+}
